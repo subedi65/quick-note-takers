@@ -2,6 +2,8 @@ const { app, BrowserWindow, ipcMain } = require('electron');
 
 app.disableHardwareAcceleration();
 
+// This comment is to test the git
+
 const path = require('node:path');
 const fs = require('node:fs');
 
