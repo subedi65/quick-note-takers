@@ -47,3 +47,15 @@ ipcMain.handle('load-note', async () => {
     }
     return '';
 });
+ipcMain.handle('save-as', async (event, text) => {
+    // Implementation for saving as a new file
+    const result =await dialog.showSacveDialog({
+        defaultPath:"mynote.txt",
+        filters:[{name:'Text Files',extensions:["txt"]}]    
+    });
+    if (result.canceled){
+        return{success:false};
+    }
+    fs.writeFilesync(result.filePath, text, 'utf-8');
+    return { success: true }; 
+});

@@ -2,6 +2,7 @@ window.addEventListener('DOMContentLoaded', async () => {
     const textarea = document.getElementById('note');
     const saveBtn = document.getElementById('save');
     const statusEl = document.getElementById('save_status');
+    const saveAsBtn = document.getElementById('save-as');
 
     const savedNote = await window.electronAPI.loadNote();
     textarea.value = savedNote;
@@ -19,6 +20,17 @@ window.addEventListener('DOMContentLoaded', async () => {
             statusEl.textContent = 'Manual save failed';
         }
     });
+
+    saveAsBtn.addEventListener('click', async () => {
+        const result = await window.electronAPI.saveNoteAs(textarea.value);
+        if (result.success) {
+            lastSavedText = textarea.value;
+            statusEl.textContent = `Note saved as ${result.filePath}`;
+        }else{
+            statusEl.textContent = 'Save As cancelled';
+            }
+    });
+    
 
     async function autoSave() {
         const currentText = textarea.value;
